@@ -22,7 +22,7 @@ resource "aws_instance" "app_server" {
   subnet_id = "subnet-0618f5dbc5a4b2f81"
   key_name  = "clavelucatic2"
   tags = {
-    Name = "Terraforminstancia"
+    Name = var.instance_name
     APP  = "vue2048"
   }
 }
