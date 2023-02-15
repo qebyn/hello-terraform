@@ -9,6 +9,12 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
+variable "instance_name" {
+  description = "The name to be given to the AWS instance."
+  type        = string
+  default     = "Terraforminstancia"
+}
+
 provider "aws" {
   region = "eu-west-1"
 }
@@ -25,6 +31,18 @@ resource "aws_instance" "app_server" {
     Name = var.instance_name
     APP  = "vue2048"
   }
-}
 
+  user_data = <<-EOF
+    #!/bin/sh
+    amazon-linux-extras install -y docker
+    service docker start
+    systemctl enable docker
+    usermod -a -G docker ec2-user
+    pip3 install docker-compose
+    wget https://raw.githubusercontent.com/qebyn/hello-2048/main/docker-compose.yml
+    chown ec2-user compose.yaml
+    docker-compose pull
+    docker-compose up -d
+  EOF
+}
 
