@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Infrastructure"){
             steps {
-                withAWS(credentials: 'aws-access-key', region: 'eu-west-1') {
+                withAWS(credentials: 'aws_access_key', region: 'eu-west-1') {
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
                 }
@@ -13,8 +13,8 @@ pipeline {
         stage("Deployment"){
             steps {
                 dir('ansible') {
-                    sshagent(['	ssh-amazon-qebyn']){
-                        withAWS(credentials: 'aws-access-key', region: 'eu-west-1')  {
+                    sshagent(['ssh-amazon-qebyn']){
+                        withAWS(credentials: 'aws_access_key', region: 'eu-west-1')  {
                             sh 'ansible-playbook -i aws_ec2.yml ec2-dockerconfig.yml'
                         }
                     }
