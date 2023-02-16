@@ -24,30 +24,7 @@ resource "aws_instance" "app_server" {
   tags = {
     Name = var.instance_name
     APP  = var.app_name
-  }
+ }
 
-  user_data = base64encode(templatefile("user_data.sh", {}))
-
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = file("/home/sinensia/.ssh/clavelucatic2.pem")
-    host        = self.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "amazon-linux-extras install -y docker",
-      "service docker start",
-      "usermod -a -G docker ec2-user",
-      "pip3 install docker-compose",
-      "mkdir /home/ec2-user/hello2048",
-      "cd /home/ec2-user/hello2048",
-      "wget https://raw.githubusercontent.com/qebyn/hello-2048/main/docker-compose.yml",
-      "docker-compose pull",
-      "docker-compose up -d",
-      "chown -R ec2-user:ec2-user /home/ec2-user/hello2048",
-    ]
-  }
 }
 
