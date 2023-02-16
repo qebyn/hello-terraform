@@ -1,8 +1,6 @@
 ---
-- name: 
-  hosts: all
+- hosts: all
   gather_facts: false
-  vars:
   tasks:
     - name: Wait for SSH to come up
       wait_for_connection:
@@ -15,7 +13,6 @@
 - name: Configure instance(s)
   hosts: all
   become: true
-  gather_facts: true
   vars:
     ansible_user: ec2-user
 
