@@ -9,3 +9,8 @@ variable "app_name" {
   type        = string
   default     = "AppName"
 }
+
+variable "region" {
+  type = string
+}
+
