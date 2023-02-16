@@ -14,7 +14,7 @@ pipeline {
                         sh 'git push --tags'
                     }
            
-                    sh "docker tag ghcr.io/qebyn/hello-terraform:latest ghcr.io/qebyn/hello-terraform:1.0.${BUILD_NUMBER}"
+                    sh "docker tag ghcr.io/qebyn/hello-terraform/nginx2048:latest ghcr.io/qebyn/hello-terraform/nginx2048:1.0.${BUILD_NUMBER}"
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
            steps {
                 withCredentials([string(credentialsId: 'github-tokenqebyn', variable: 'PAT')]) {
                     dir("docker") {
-                        sh 'echo $PAT | docker login ghcr.io -u qebyn --password-stdin && docker-compose push && docker push ghcr.io/qebyn/hello-terraform:1.0.${BUILD_NUMBER}'
+                        sh 'echo $PAT | docker login ghcr.io -u qebyn --password-stdin && docker-compose push && docker push ghcr.io/qebyn/hello-terraform/nginx2048:1.0.${BUILD_NUMBER}'
 
                     }
                 }
@@ -46,3 +46,5 @@ pipeline {
     }
 }
 }
+
+
