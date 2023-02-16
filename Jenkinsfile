@@ -13,7 +13,7 @@ pipeline {
         stage("Deployment"){
             steps {
                 dir('ansible') {
-                    sshagent(['ssh-amazon-qebyn']){
+                    sshagent(['ssh-amazon']){
                         withAWS(credentials: 'aws_access_key', region: 'eu-west-1')  {
                             sh 'ansible-playbook -i aws_ec2.yml ec2-launch.yml'
                         }
