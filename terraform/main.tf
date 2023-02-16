@@ -26,12 +26,9 @@ resource "aws_instance" "app_server" {
     APP  = var.app_name
   }
 
-  user_data = base64encode(templatefile("user_data.sh", {}))
-
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("/home/sinensia/.ssh/clavelucatic2.pem")
     host        = self.public_ip
   }
 
